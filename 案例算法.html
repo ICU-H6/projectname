@@ -1,0 +1,250 @@
+<!-- 
+    一.目标：
+    1.必须完成下面的案例，要求思路非常清楚，进行合理的描述。
+    2.根据当前的案例举一反三效果。
+
+    二.案例：
+    算法：
+    1.数组去重 √
+        标记法
+        splice直接删除
+        indexOf检测
+        indexOf+filter过滤
+        对象去重
+        sort比较排序去重
+        Set结构去重
+        正则去重
+    2.通过循环按行顺序为一个5×5的二维数组a赋1到25的自然数，然后输出该数组的左下半三角。
+        根据二维数组的赋值和二维数组的索引进行输出
+    3.以下是某班级一次考试的成绩表。请计算每个学生总成绩，并按总成绩排名。
+        var data = [{
+            StudentNumber: 1,
+            Chinese: 105,
+            Math: 62,
+            English: 118,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 2,
+            Chinese: 89,
+            Math: 78,
+            English: 120,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 3,
+            Chinese: 86,
+            Math: 64,
+            English: 80,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 4,
+            Chinese: 78,
+            Math: 99,
+            English: 91,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 5,
+            Chinese: 107.5,
+            Math: 97,
+            English: 70,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 6,
+            Chinese: 112,
+            Math: 61,
+            English: 92,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 7,
+            Chinese: 101,
+            Math: 79,
+            English: 104,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 8,
+            Chinese: 71,
+            Math: 72,
+            English: 105,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 9,
+            Chinese: 56,
+            Math: 68,
+            English: 61,
+            TotalScore: "",
+            Comment: "优"
+        }, {
+            StudentNumber: 10,
+            Chinese: 98,
+            Math: 83,
+            English: 77,
+            TotalScore: "",
+            Comment: "优"
+        }];
+        //总成绩求和
+        data.map(function(t) {
+            t.TotalScore = t.Chinese + t.Math + t.English;
+            if (t.TotalScore >= 250) {
+                t.Comment = '优秀';
+            } else {
+                t.Comment = '一般';
+            }
+        });
+        //总成绩排序
+        data.sort(function(pre, next) {
+            return pre.TotalScore - next.TotalScore;
+        });
+
+        //渲染
+        var table = "<table>";
+        table += "<tr>";
+        for (var prop in data[1]) {
+            table += "<th>" + prop + "</th>";
+        }
+        table += "</tr>";
+        for (var i = 0; i < data.length; i++) {
+            table += "<tr>";
+            for (var key in data[i]) {
+                table += "<td>" + data[i][key] + "</td>";
+            }
+            table += "</tr>";
+        }
+        document.write(table);
+    4.数组的扁平化 - 将多维数组转换成一维数组。
+        flat方法
+        字符串+split
+        递归去重
+        function fn(arr){
+        　　　　let arr1 = []
+            arr.forEach((val)=>{
+                if(val instanceof Array){
+                    arr1 = arr1.concat(fn(val))
+                }else{
+                    arr1.push(val)
+                }
+            })
+            return arr1
+        }
+
+        function fn(arr){
+            return arr.reduce((prev,cur)=>{
+                return prev.concat(Array.isArray(cur)?fn(cur):cur)
+            },[])
+        }
+
+        扩展运算符
+        function fn(arr){
+            let arr1 = [];
+            let bstop = true;
+            arr.forEach((val)=>{
+                if(Array.isArray(val)){
+                    arr1.push(...val);
+                    bstop = false
+                }else{
+                    arr1.push(val)
+                }
+            })
+            if(bstop){
+                return arr1;
+            }
+            return fn(arr1)
+        }
+    5.统计字符串中字符出现的次数。√
+        标记统计
+        reduce统计
+        var result=arr.reduce(function(prev,curr){
+            prev[curr]=prev[curr]+1 || 1;
+            return prev;
+        },{});
+    6.利用递归求两个数字的最大公约数和最小公倍数(最小公倍数的算法，是两个数的乘积除以最大公倍数)。√
+        最大公因数，也称最大公约数、最大公因子，指两个或多个整数共有约数中最大的一个
+        function fn1(m, n) { //辗转相除法。
+            var r = m % n;
+            m = n;
+            n = r;
+            if (r === 0) {
+                return m;
+            } else {
+                return fn1(m, n); //递归
+            }
+        }
+
+        最小公倍数:和递归没有关系。是两个数的乘积除以最大公约数
+        function fn2(m, n) {
+            return (m * n) / fn1(m, n);
+        }
+
+    7.入职薪水10K，每年涨幅5%，50年后薪水是多少?（递归）。√
+        从第一年开始递归计算
+
+        function salary(money,year){
+            if(year<=50){
+                return salary(money+money*0.05,++year);
+            }
+            return money;
+        }
+
+        salary(10000,1)
+
+    8.封装函数实现随机数设定范围 例如：rannum(4,9) :随机产生4-9之间的整数，包括4和9。√
+        function rannum(min, max) {
+            return Math.round(Math.random() * (max - min)) + min;
+        }
+
+    9.倒计时效果。
+        设置未来的时间，使用未来的时间 - 当前的时间 
+        然后进行天时分秒的换算。
+        
+    10.数组的排序(冒泡，选择，快速)
+        冒泡排序：√
+        选择排序：
+        快速排序的原理：
+        从待排序的数组中随机截取一位(截取偏中间) - splice
+        剩下的值和截取的值进行比较(如果比截取的值小存放left数组中，否则存放right的数组中)
+        递归对left和right分别进行上面的重复操作，直到数组的长度<=1.
+        每一次利用concat将两个数组(left,right)与截取的中间值进行拼接。
+        function quicksort(arr) {
+            if (arr.length <= 1) { //基点。
+                return arr;
+            } else {
+                //递归进行操作。
+                //开始截取
+                var midindex = parseInt(arr.length / 2); //获取中间值的索引
+                var midvalue = arr.splice(midindex, 1)[0]; //截取中间值。
+                //比较的核心：
+                var left = [];
+                var right = [];
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i] < midvalue) {
+                        left.push(arr[i])
+                    } else {
+                        right.push(arr[i]);
+                    }
+                }
+                return quicksort(left).concat(midvalue, quicksort(right));//拼接数组
+            }
+        }
+
+    效果：
+    11.广告弹出窗自动关闭+添加倒计时效果
+    12.顶部悬浮（百度新闻的导航）   
+    13.回到顶部（百度新闻的回到顶部效果）
+    14.动态创建表格，删除，编辑(微博发布)√√
+    15.百度和京东轮播图 √
+    16.tab切换案例(选项卡效果) 
+    17.CSS模拟下拉菜单（select）
+    18.百度的登录框效果 √
+    19.表单验证 √√
+    20.拖拽和限定范围
+    21.幻灯片效果
+    22.放大镜效果 √
+    23.九宫格拖拽
+    24.瀑布流效果
+ -->

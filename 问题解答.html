@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>111111</li>
+        <span>span1</span>
+        <li>222222</li>
+        <span>span</span>
+        <li>333333</li>
+        <span>span2</span>
+        <li>444444</li>
+    </ul>
+    <button>创建li元素</button>
+</body>
+
+</html>
+<script>
+    //一.分号的重要性。
+    //表达式后面添加分号。实在不行，宁可多加，不可漏加。
+    //1.js编程中的分号是可有可无的，前提是每行写一条语句。
+    // function fn() {
+    //     return 
+    //     {
+    //         a: 1
+    //     }
+    // }
+    // console.log(fn()); //undefined,return后面自动添加分号。
+
+    //2.一旦代码开始以[]或者()开头的前面的代码必须添加分号。
+    // var a = 1
+    // ['zhangsan', 'lisi'].map(function(v) {
+    //     console.log(v);
+    // });
+
+    // function fn() {
+    //     console.log(123);
+    // }
+    // fn();
+    // (function() {
+    //     console.log(456);
+    // })();
+    // (function() {
+    //     console.log(789);
+    // })();
+
+    // var a = 5
+    // 'x' + 'y'.toString();//这里也是会报错，添加分号
+
+
+    // function fn() {
+    //     console.log(123);
+    // };//这里不需要分号
+    // fn();
+
+    // const fn = function() {
+    //     console.log(345);
+    // }; //这里需要添加分号
+
+
+    // while(true){
+
+    // }//这里不需要分号
+
+    // do{
+
+    // }while(true);
+
+    // for(;;){
+
+    // }
+
+
+    // 二.常量和对象
+    // 常量的值的不可改变。
+    // const a = 10;
+    // a = 20;
+    // console.log(a);//报错的
+    // 常量针对于对象来说，保证地址不变即可,里面的属性值可以随意改变。
+    // const obj = {
+    //     name: 'zhangsan',
+    //     age:100
+    // };
+    // obj.name = 'lisi';
+    //通过delete删除对象里面的属性。
+    // delete obj.name;
+    // console.log(obj.name);
+    // window下面有一个属性叫name，使用name大概率不会报错。输出空
+    // console.log(name); //空，不会报错。
+    // console.log(age); //报错
+    // obj = {}; //这里不能添加，这里改变了obj的地址了。
+
+
+    // 三.对象赋值
+    // let obj1 = {
+    //     a: 1
+    // };
+    // let obj2 = {
+    //     b: 2
+    // };
+    // let obj3 = {};
+    // 对象的返回值是一样的，输出[object Object]字符串。
+    // obj3[obj1] = 100; //obj3['[object Object]'] = 100;
+    // obj3[obj2] = 200; //obj3['[object Object]'] = 200;
+    // console.log(obj3[obj1]); //200
+
+
+
+
+    // let obj = {
+
+    // };
+
+    // obj.name = 'wangwu';
+    // obj['age'] = 100;
+    // obj.age = 200;
+    // console.log(obj);
+
+    //四.普通函数和箭头函数
+    //所有的全局变量都是window下面的属性，所有的全局函数都是window下面的方法。
+    //函数内部变量的作用域取决于函数声明时的作用域。
+    // var num = 100;
+    // function fn() {
+    //     console.log(this.num); //this->window
+    // }
+    // var obj = {
+    //     num: 200,
+    //     shownum: function() {
+    //         fn();
+    //     }
+    // };
+    // var obj = {
+    //     num: 200,
+    //     shownum: fn
+    // };
+    // obj.shownum();
+
+    //箭头函数：this来自于父级。this不可改变。不能最外层使用箭头函数(this->window)。
+    // let fn = () => {
+    //     // this:window
+    //     let fn1 = () => {
+    //         console.log(this);
+    //     }
+    //     fn1();
+    // }
+    // fn();
+
+
+    //五.同步异步
+    // let num = 1;
+    // document.onclick = function() { //事件相当于是异步的。
+    //     num++;
+    //     console.log(num);
+    // };
+    // console.log(num); //1  这里比上面的事件先执行。
+
+    // document.onclick = function() { //异步
+    //     setTimeout(function() {
+    //         console.log('document');
+    //     }, 0);
+    // };
+
+    // setTimeout(function() { //异步
+    //     console.log('定时器里面');
+    // }, 0);
+
+    // console.log('ok'); //主线程，同步
+
+    //六.事件委托
+    // const oUl = document.querySelector('ul');
+    // const oBtn = document.querySelector('button');
+
+    // oBtn.onclick = function() {
+    //     let cLi = document.createElement('li');
+    //     cLi.innerHTML = '66666666666666';
+    //     oUl.appendChild(cLi);
+    // };
+
+    // var aLi = document.querySelectorAll('ul li');
+    // for (var i = 0; i < aLi.length; i++) {
+    //     aLi[i].onclick = function() {
+    //         console.log(this.innerHTML);
+    //     }
+    // }
+
+    // oUl.onclick = function(ev) {
+    //     var ev = ev || window.event;
+    //     if (ev.target.nodeName = 'LI') {
+    //         console.log(ev.target.innerHTML);
+    //     }
+    // };
+
+
+    //七.遍历的区别
+    var obj = {
+        a: 1,
+        b: 2
+    };
+    obj['c'] = 3;
+    console.log(obj);
+
+    var arr = ['start'];
+    arr[1] = 'one';
+    arr[2] = 'two';
+    arr[3] = 'three';
+    arr['name'] = 'zhangsan';
+    arr['age'] = '100';
+    arr['sex'] = '男';
+    console.log(arr);
+    console.log(arr.length); //4
+
+    for (var i = 0; i < arr.length; i++) { //遍历默认索引。
+        console.log(i);
+        // console.log(arr[i]);
+    }
+
+
+    //for...in遍历数组不考虑是否是数字索引。全部遍历
+    for (var i in arr) {
+        // console.log(arr[i]);
+        console.log(i);
+    }
+    //数组的键名是数字，但是for...in循环是以字符串作为键名“0”、“1”、“2”等等。
+</script>
